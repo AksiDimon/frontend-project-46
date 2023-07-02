@@ -16,5 +16,10 @@
     "commander": "^11.0.0",
     "lodash": "^4.17.21",
     "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
   }
 }
