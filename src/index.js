@@ -13,7 +13,8 @@ const genDiff = (filepath1, filepath2) => {
 
   const key1 = _.keys(dataParse1);
   const key2 = _.keys(dataParse2);
-  const allKeys = [...key1, ...key2];
+  const allKeys = _.union(key1, key2);
+  console.log(allKeys);
 
   const diff = {};
 
@@ -28,6 +29,9 @@ const genDiff = (filepath1, filepath2) => {
       case dataParse1[key] !== dataParse2[key]:
         diff[`- ${key}`] = dataParse1[key];
         diff[`+ ${key}`] = dataParse2[key];
+        break;
+      case dataParse1[key] === dataParse2[key]:
+        diff[`  ${key}`] = dataParse1[key];
         break;
       default:
         break;
