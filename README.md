@@ -11,3 +11,5 @@
 ## JSON gendiff step 3 in project:
 
 [![asciicast](https://asciinema.org/a/VaL7frkwErJtHhRocpPjV9D10.svg)](https://asciinema.org/a/VaL7frkwErJtHhRocpPjV9D10)
+
+[![asciicast](https://asciinema.org/a/eN6slWFryzZukgNHEfsZJGZNe.svg)](https://asciinema.org/a/eN6slWFryzZukgNHEfsZJGZNe)

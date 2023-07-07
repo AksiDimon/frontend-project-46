@@ -13,30 +13,47 @@ const genDiff = (filepath1, filepath2) => {
 
   const key1 = _.keys(dataParse1);
   const key2 = _.keys(dataParse2);
-  const allKeys = _.union(key1, key2);
-  console.log(allKeys);
+  const allKeys = _.union(key1, key2).sort();
 
-  const diff = {};
+  const diff = allKeys.map((node) => {
+    if (_.has(filepath1, node) && _.has(filepath2, node)) {
+      if (filepath1[node] === filepath2[node]) {
+        return { key: node, value: filepath1[node], type: 'unchanged' };
+      }
 
-  for (const key of allKeys) {
-    switch (true) {
-      case !key1.includes(key):
-        diff[`+ ${key}`] = dataParse2[key];
-        break;
-      case !key2.includes(key):
-        diff[`- ${key}`] = dataParse1[key];
-        break;
-      case dataParse1[key] !== dataParse2[key]:
-        diff[`- ${key}`] = dataParse1[key];
-        diff[`+ ${key}`] = dataParse2[key];
-        break;
-      case dataParse1[key] === dataParse2[key]:
-        diff[`  ${key}`] = dataParse1[key];
-        break;
-      default:
-        break;
+      if (filepath1[node] !== filepath2[node]) {
+        return { key: node, value: filepath2[node], type: 'changed' };
+      }
     }
-  }
+
+    if (_.has(filepath1, node) && !_.has(filepath2, node)) {
+      return { key: node, value: key1[node], type: 'deleted' };
+    }
+
+    if (_.has(filepath2, node) && !_.has(filepath1, node)) {
+      return { key: node, value: filepath2[node], type: 'added' };
+    }
+  });
   return diff;
 };
+console.log(genDiff(filepath1, filepath2));
+
+const render = (diff) => {
+  const tree = diff.map((node) => {
+    switch (node.type) {
+      case 'added':
+      case 'deleted':
+      case 'unchanged':
+        return `${symbols[node.type]}${node.key}: ${node.value}`;
+      case 'changed':
+        return ` - ${node.key}: ${node.oldValue}\n + ${node.key}: ${node.value}`;
+      default:
+        console.log('ERROR');
+    }
+  });
+
+  return `{\n${tree.join('\n')}\n}`;
+};
+console.log(render(genDiff(filepath1, filepath2)));
+
 export default genDiff;
