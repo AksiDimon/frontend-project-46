@@ -11,6 +11,6 @@ const result = fs.readFileSync(
 );
 
 test('compaer flat tree', () => {
-  const actual = genDiff(findingfile2, findingfile1);
+  const actual = genDiff(findingfile1, findingfile2);
   expect(actual).toEqual(result);
 });
