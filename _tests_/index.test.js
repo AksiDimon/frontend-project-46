@@ -12,10 +12,18 @@ const getFixturePath = (filename) =>
 const readFile = (filename) =>
   fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-test('compaer flat tree', () => {
+test('compaer Json flat tree', () => {
   const actualJson = genDiff(
     getFixturePath('filepath1.json'),
     getFixturePath('filepath2.json')
+  );
+  expect(actualJson).toEqual(readFile('expect.txt'));
+});
+
+test('compaer Yml flat tree', () => {
+  const actualJson = genDiff(
+    getFixturePath('filepath1.yml'),
+    getFixturePath('filepath2.yml')
   );
   expect(actualJson).toEqual(readFile('expect.txt'));
 });

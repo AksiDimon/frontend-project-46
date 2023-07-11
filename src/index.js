@@ -1,6 +1,7 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import _ from 'lodash';
-import { readFileSync } from 'fs';
-import path from 'path';
+import parse from './parsers.js';
 
 const buildFixturesPath = (fileName) => path.resolve('__fixtures__', fileName);
 
@@ -11,54 +12,41 @@ const symbols = {
 };
 
 const genDiff = (filepath1, filepath2) => {
-  const data1 = readFileSync(buildFixturesPath(filepath1), 'utf-8');
-  const data2 = readFileSync(buildFixturesPath(filepath2), 'utf-8');
+  const rawData1 = readFileSync(buildFixturesPath(filepath1), 'utf-8');
+  const rawData2 = readFileSync(buildFixturesPath(filepath2), 'utf-8');
 
-  let dataParse1;
-  let dataParse2;
+  const extension1 = path.extname(filepath1).slice(1);
+  const extension2 = path.extname(filepath2).slice(1);
 
-  if (filepath1.endsWith('.json')) {
-    dataParse1 = JSON.parse(data1);
-  } else if (filepath1.endsWith('.yml') || filepath1.endsWith('.yaml')) {
-    dataParse1 = YAML.parse(data1);
-  } else {
-    throw new Error('Unsupported file format');
-  }
+  let parsedData1 = parse(rawData1, extension1);
+  let parsedData2 = parse(rawData2, extension2);
 
-  if (filepath2.endsWith('.json')) {
-    dataParse2 = JSON.parse(data2);
-  } else if (filepath2.endsWith('.yml') || filepath2.endsWith('.yaml')) {
-    dataParse2 = YAML.parse(data2);
-  } else {
-    throw new Error('Unsupported file format');
-  }
-
-  const key1 = _.keys(dataParse1);
-  const key2 = _.keys(dataParse2);
+  const key1 = _.keys(parsedData1);
+  const key2 = _.keys(parsedData2);
   const allKeys = _.union(key1, key2).sort();
 
   const diff = allKeys.map((node) => {
-    if (_.has(dataParse1, node) && _.has(dataParse2, node)) {
-      if (dataParse1[node] === dataParse2[node]) {
-        return { key: node, value: dataParse1[node], type: 'unchanged' };
+    if (_.has(parsedData1, node) && _.has(parsedData2, node)) {
+      if (parsedData1[node] === parsedData2[node]) {
+        return { key: node, value: parsedData1[node], type: 'unchanged' };
       }
 
-      if (dataParse1[node] !== dataParse2[node]) {
+      if (parsedData1[node] !== parsedData2[node]) {
         return {
           key: node,
-          value: dataParse2[node],
-          oldValue: dataParse1[node],
+          value: parsedData2[node],
+          oldValue: parsedData1[node],
           type: 'changed',
         };
       }
     }
 
-    if (_.has(dataParse1, node) && !_.has(dataParse2, node)) {
-      return { key: node, value: dataParse1[node], type: 'deleted' };
+    if (_.has(parsedData1, node) && !_.has(parsedData2, node)) {
+      return { key: node, value: parsedData1[node], type: 'deleted' };
     }
 
-    if (_.has(dataParse2, node) && !_.has(dataParse1, node)) {
-      return { key: node, value: dataParse2[node], type: 'added' };
+    if (_.has(parsedData2, node) && !_.has(parsedData1, node)) {
+      return { key: node, value: parsedData2[node], type: 'added' };
     }
   });
 
@@ -76,4 +64,9 @@ const genDiff = (filepath1, filepath2) => {
   });
   return `{\n ${tree.join('\n ')}\n}`;
 };
+
+// console.log(genDiff('filepath1.json', 'filepath2.yml'));
+// const parsedPath = path.parse('src/files/config.json').dir;
+// console.log(parsedPath);
+
 export default genDiff;
