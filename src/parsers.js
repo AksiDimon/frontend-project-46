@@ -1,5 +1,4 @@
 import yamlParser from 'js-yaml';
-import path from 'node:path';
 
 // const parse = (filepath1, filepath2, data1, data2) => {
 //   if (filepath1.endsWith('.json')) {
