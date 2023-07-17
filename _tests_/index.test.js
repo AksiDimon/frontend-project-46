@@ -12,18 +12,31 @@ const getFixturePath = (filename) =>
 const readFile = (filename) =>
   fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-test('compaer Json flat tree', () => {
-  const actualJson = genDiff(
+test('compaer Json nested tree', () => {
+  const actual1 = genDiff(
     getFixturePath('filepath1.json'),
-    getFixturePath('filepath2.json')
+    getFixturePath('filepath2.json', 'stylish')
   );
-  expect(actualJson).toEqual(readFile('expect.txt'));
+  expect(actual1).toEqual(readFile('expect.txt'));
 });
-
-test('compaer Yml flat tree', () => {
-  const actualJson = genDiff(
+test('compaer Yml and Yaml nested tree', () => {
+  const actual2 = genDiff(
     getFixturePath('filepath1.yml'),
-    getFixturePath('filepath2.yml')
+    getFixturePath('filepath2.yaml', 'stylish')
   );
-  expect(actualJson).toEqual(readFile('expect.txt'));
+  expect(actual2).toEqual(readFile('expect.txt'));
 });
+test('compaer plain tree', () => {
+  const actual3 = genDiff(
+    getFixturePath('filepath1.json'),
+    getFixturePath('filepath2.json', 'plain')
+  );
+  expect(actual3).toEqual(readFile('expectPlain.txt'));
+});
+//test('compaer plain tree', () => {
+// const actual4 = genDiff(
+//   getFixturePath('filepath1.yml'),
+//  getFixturePath('filepath2.json', 'plain')
+// );
+//  expect(actual4).toEqual(readFile('expectPlain.txt'));
+//});

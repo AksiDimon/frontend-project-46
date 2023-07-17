@@ -12,7 +12,7 @@ const stringify = (data, depth = 1) => {
     ([node, value]) =>
       `${getIndent(depth)}  ${node}: ${stringify(value, depth + 1)}`
   );
-  const result = ['{', ...lines, `${getIndent(depth)}}`].join('\n');
+  const result = ['{', ...lines, `${getIndent(depth - 1)}  }`].join('\n');
   return result;
 };
 

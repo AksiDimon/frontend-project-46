@@ -17,3 +17,7 @@
 ## YML gendiff step 5
 
 [![asciicast](https://asciinema.org/a/dAhReYLnMgrjyXgzvwwf5IIT2.svg)](https://asciinema.org/a/dAhReYLnMgrjyXgzvwwf5IIT2)
+
+## plain compare step 7
+
+[![asciicast](https://asciinema.org/a/gh72HIuLlIh3bCTXPgPuz6TlG.svg)](https://asciinema.org/a/gh72HIuLlIh3bCTXPgPuz6TlG)
