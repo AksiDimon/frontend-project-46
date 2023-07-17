@@ -8,9 +8,7 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d3568eef20d1627e9353/test_coverage)](https://codeclimate.com/github/AksiDimon/frontend-project-46/test_coverage)
 
-## JSON gendiff step 3 in project:
-
-[![asciicast](https://asciinema.org/a/VaL7frkwErJtHhRocpPjV9D10.svg)](https://asciinema.org/a/VaL7frkwErJtHhRocpPjV9D10)
+## Json gendiff step 3 in project:
 
 [![asciicast](https://asciinema.org/a/eN6slWFryzZukgNHEfsZJGZNe.svg)](https://asciinema.org/a/eN6slWFryzZukgNHEfsZJGZNe)
 
@@ -21,3 +19,15 @@
 ## plain compare step 7
 
 [![asciicast](https://asciinema.org/a/gh72HIuLlIh3bCTXPgPuz6TlG.svg)](https://asciinema.org/a/gh72HIuLlIh3bCTXPgPuz6TlG)
+
+## gendiff -format json Json
+
+[![asciicast](https://asciinema.org/a/efIrz6AuRWTGmK4zSRJV80MyB.svg)](https://asciinema.org/a/efIrz6AuRWTGmK4zSRJV80MyB)
+
+## compare nested tree Json
+
+[![asciicast](https://asciinema.org/a/i1yapLTjbm9Xqy7jCFYWWZnlv.svg)](https://asciinema.org/a/i1yapLTjbm9Xqy7jCFYWWZnlv)
+
+## compare nested tree Yml to Yaml
+
+[![asciicast](https://asciinema.org/a/avZnAriOLwauKcbDKYaRGWE1n.svg)](https://asciinema.org/a/avZnAriOLwauKcbDKYaRGWE1n)
