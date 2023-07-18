@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
-import path, { format } from 'node:path';
-import _ from 'lodash';
+import path from 'node:path';
 import parse from './parsers.js';
 import makeTree from './buildTree.js';
 import checkFormat from './formaters/index.js';

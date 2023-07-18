@@ -25,7 +25,7 @@ const getPlain = (value) => {
           return `Property '${format}${
             val.name
           }' was updated. From ${checkValue(val.value1)} to ${checkValue(
-            val.value2
+            val.value2,
           )}`;
         case 'nested':
           return iter(val.children, `${format}${val.name}.`);

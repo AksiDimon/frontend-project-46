@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const replacer = ' ';
 const getIndent = (depth) => replacer.repeat(depth * 4 - 2);
 
@@ -9,8 +7,7 @@ const stringify = (data, depth = 1) => {
   }
   const entries = Object.entries(data);
   const lines = entries.map(
-    ([node, value]) =>
-      `${getIndent(depth)}  ${node}: ${stringify(value, depth + 1)}`
+    ([node, value]) => `${getIndent(depth)}  ${node}: ${stringify(value, depth + 1)}`,
   );
   const result = ['{', ...lines, `${getIndent(depth - 1)}  }`].join('\n');
   return result;
@@ -22,7 +19,9 @@ const stylish = (tree) => {
     const values = Object.values(currentValue);
     const lines = values.map((val) => {
       const firstIndent = getIndent(depth);
-      const { type, name, value, value1, value2, children } = val;
+      const {
+        type, name, value, value1, value2, children,
+      } = val;
 
       switch (type) {
         case 'nested':
@@ -34,7 +33,7 @@ const stylish = (tree) => {
         case 'changed':
           return `${firstIndent}- ${name}: ${stringify(
             value1,
-            depth + 1
+            depth + 1,
           )}\n${getIndent(depth)}+ ${name}: ${stringify(value2, depth + 1)}`;
         default:
           return `${firstIndent}  ${name}: ${stringify(value, depth + 1)}`;

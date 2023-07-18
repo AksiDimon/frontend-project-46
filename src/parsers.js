@@ -27,6 +27,7 @@ const parse = (data, ext) => {
       return yamlParser.load(data);
     default:
       console.error('Unknown extension');
+      return undefined;
   }
 };
 
