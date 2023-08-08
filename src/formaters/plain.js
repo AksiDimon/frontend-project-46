@@ -1,4 +1,4 @@
-const checkValue = (node) => {
+const stringify = (node) => {
   if (node === null) {
     return null;
   }
@@ -8,7 +8,7 @@ const checkValue = (node) => {
   if (typeof node === 'object' && node !== null) {
     return '[complex value]';
   }
-  return String(node);
+  return node;
 };
 
 const getPlain = (value) => {
@@ -18,22 +18,24 @@ const getPlain = (value) => {
         case 'added':
           return `Property '${format}${
             val.name
-          }' was added with value: ${checkValue(val.value)}`;
+          }' was added with value: ${stringify(val.value)}`;
         case 'deleted':
           return `Property '${format}${val.name}' was removed`;
         case 'changed':
           return `Property '${format}${
             val.name
-          }' was updated. From ${checkValue(val.value1)} to ${checkValue(
+          }' was updated. From ${stringify(val.value1)} to ${stringify(
             val.value2,
           )}`;
         case 'nested':
           return iter(val.children, `${format}${val.name}.`);
+        case 'unchanged':
+            return null;
         default:
-          return [];
+          throw new Error(`Unknown order state!: ${val.type}!`);
       }
     });
-    return result.join('\n');
+    return result.filter((val) => val !== null).join('\n');
   };
   return iter(value, '');
 };

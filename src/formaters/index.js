@@ -11,6 +11,6 @@ const checkFormat = (tree, format) => {
   if (format === 'plain') {
     return getPlain(tree);
   }
-  return 'type is not supported';
+  throw new Error(`Unknown order state: ${format}!`);
 };
 export default checkFormat;

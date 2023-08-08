@@ -1,5 +1,5 @@
 const replacer = ' ';
-const getIndent = (depth) => replacer.repeat(depth * 4 - 2);
+const getIndent = (depth) => replacer.repeat(Math.max(depth * 4 - 2, 0));
 
 const stringify = (data, depth = 1) => {
   if (typeof data !== 'object' || data === null) {
@@ -9,19 +9,22 @@ const stringify = (data, depth = 1) => {
   const lines = entries.map(
     ([node, value]) => `${getIndent(depth)}  ${node}: ${stringify(value, depth + 1)}`,
   );
-  const result = ['{', ...lines, `${getIndent(depth - 1)}  }`].join('\n');
+  const result = ['{', ...lines, `${getIndent(Math.max(depth - 1, 0))}  }`].join('\n');
   return result;
 };
 
 const stylish = (tree) => {
   const iter = (currentValue, depth) => {
+    if (depth === 0) {
+      return '';
+    }
     const lastIndent = depth === 1 ? '' : `${getIndent(depth - 1)}  `;
     const values = Object.values(currentValue);
     const lines = values.map((val) => {
       const firstIndent = getIndent(depth);
       const {
         type, name, value, value1, value2, children,
-      } = val;
+      } = val || {};
 
       switch (type) {
         case 'nested':
@@ -31,10 +34,7 @@ const stylish = (tree) => {
         case 'deleted':
           return `${firstIndent}- ${name}: ${stringify(value, depth + 1)}`;
         case 'changed':
-          return `${firstIndent}- ${name}: ${stringify(
-            value1,
-            depth + 1,
-          )}\n${getIndent(depth)}+ ${name}: ${stringify(value2, depth + 1)}`;
+          return [`${firstIndent}- ${name}: ${stringify(value1, depth + 1)}\n${getIndent(depth)}+ ${name}: ${stringify(value2, depth + 1)}`].join('');
         default:
           return `${firstIndent}  ${name}: ${stringify(value, depth + 1)}`;
       }

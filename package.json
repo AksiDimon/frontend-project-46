@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "type": "module",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/AksiDimon/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/AksiDimon/frontend-project-46/actions)",
+  "description": "Проект вычислитель отличий",
   "main": "src/index.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
@@ -15,8 +15,7 @@
   "dependencies": {
     "commander": "^11.0.0",
     "js-yaml": "^4.1.0",
-    "lodash": "^4.17.21",
-    "nodemon": "^2.0.22"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "^8.45.0",
